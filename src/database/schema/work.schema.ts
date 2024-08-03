@@ -14,7 +14,11 @@ export interface Work extends Document {
 
 const WorkSchema = new mongoose.Schema({
   title: { type: String, default: "" },
-  type: { type: String, default: "" },
+  type: {
+    type: String,
+    enum: WorkTypeEnum,
+    default: WorkTypeEnum.WORK,
+  },
   url: { type: String, default: "" },
   date: {
     type: Date,
