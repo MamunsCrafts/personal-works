@@ -1,28 +1,45 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import connectDb from "@/database/db.connection";
 import Work from "@/database/schema/work.schema";
+import { WorkTypeEnum } from "./enum";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
-      console.log(req?.body)
-      const { title, type, topics,url, status, createDate } = req.body as {
-        title: string;
-        type: string;
-        url: string;
-        createDate: string;
-        topics: string[];
-        status: string;
+      
+      const {   company,
+        isApply,
+        workType,
+        applyLink,
+        applyingDate,
+        isAvailable,
+        deadLine,
+        salary,
+        stack,
+        action, } = req.body as  {
+        company: string; 
+        isApply:boolean;
+        workType: WorkTypeEnum;
+        applyLink: string; 
+        applyingDate: string; 
+        isAvailable: boolean;
+        deadLine:Date;
+        salary: string;
+        stack: string[]; 
+        action: string; 
       };
 
       const date = new Date();
       const todo = await Work.create({
-        title,
-        type,
-        url,
-        date,
-        createDate,
-        topics,
-        status,
+        company,
+        isApply,
+        // workType,
+        applyLink,
+        applyingDate,
+        isAvailable,
+        deadLine,
+        salary,
+        stack,
+        action,
       });
 
       res.status(201).json(todo);

@@ -9,11 +9,10 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <>
- 
- <Navbar />
- <Table />
+ <div className="bg-gray-600">
 
 
+ <WorkForm/> </div>
 
  </>
 

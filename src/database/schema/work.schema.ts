@@ -3,39 +3,65 @@ import mongoose, { Document } from "mongoose"
 
 
 export interface Work extends Document {
-  title: string
-  type: WorkTypeEnum
-  url: string
-  createDate:string
-  date: { type: Date }
-  topics: string[]
-  status: string
+  company: string; 
+  isApply:boolean;
+  workType: WorkTypeEnum;
+  applyLink: string; 
+  applyingDate: string; 
+  isAvailable: boolean;
+  deadLine:Date;
+  salary: string;
+  stack: string[]; 
+  action: string; 
 }
-
-const WorkSchema = new mongoose.Schema({
-  title: { type: String, default: "" },
-  type: {
+const WorkSchema =  new mongoose.Schema({
+  company: {
     type: String,
-    enum: WorkTypeEnum,
+    default: '',
+    required: true,
+  },
+  workType: {
+    type: String,
+    enum: Object.values(WorkTypeEnum),
     default: WorkTypeEnum.WORK,
+    required: true},
+  isApply: {
+    type: Boolean,
+    
+    default:false 
   },
-  url: { type: String, default: "" },
-  date: {
+  applyLink: {
+    type: String,
+    
+    // required: true,
+  },
+  applyingDate: {
     type: Date,
-    default: () => new Date().toLocaleDateString(),
+    default: '',
+    // required: true,
   },
-   createDate:{
-    type:String,
-   },
-  topics: {
+  isAvailable: {
+    type: Boolean,
+    default: false,
+  },
+  deadLine: {
+    type: Date,
+  
+  },
+  salary: {
+    type: String,
+    default: '',
+    // required: true,
+  },
+  stack: {
     type: [String],
     default: [],
   },
-  status: {
+  action: {
     type: String,
-    enum: ["Pending", "Learning", "Done"],
-    default: "Pending",
+    default: '',
+    // required: true,
   },
-})
+});
 
 export default mongoose.models.Work || mongoose.model<Work>("Work", WorkSchema)
