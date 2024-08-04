@@ -1,10 +1,11 @@
 import { useGetDataList } from "@/hooks/useGetDataList"
 import { useEffect, useState } from "react"
 import  formatDate  from "@/utils/date-formater"
+import { RotatingLines } from "react-loader-spinner"
 export default function Table() {
 
 
-  const { getDataList } = useGetDataList()
+  const { getDataList,loading,error } = useGetDataList()
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -16,8 +17,15 @@ export default function Table() {
 
     fetchData();
   }, []);
-  console.log("data", data)
+  
   return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    {loading &&  <div className="flex items-center justify-center h-screen bg-slate-900"><RotatingLines
+      visible={true}
+      width="96"
+      strokeWidth="5"
+      animationDuration="0.75"
+      ariaLabel="rotating-lines-loading"
+    /></div>}
     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr  >
@@ -94,19 +102,19 @@ export default function Table() {
               </td>
               <td className="px-6 py-4">
 
-                {doc?.isApply ? "Yes" : "No"}
+                {doc?.isApply ? <span className="text-green-600">Yes</span> : <span className="text-yellow-400">No</span>}
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 text-green-600">
                 {formatDate(doc?.applyingDate)}
 
               </td>
 
               <td className="px-6 py-4">
-                {doc?.isAvailable ? "Yes" : "No"}
+                {doc?.isAvailable ? <span className="text-green-600">Yes</span> : <span className="text-yellow-400">No</span>}
 
               </td>
 
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 text-red-400">
                 {formatDate(doc?.deadLine)}
 
               </td>

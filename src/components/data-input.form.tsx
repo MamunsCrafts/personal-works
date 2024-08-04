@@ -1,7 +1,7 @@
 // components/WorkForm.tsx
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-
+import Swal from 'sweetalert2'
 const WorkForm: React.FC = () => {
   const [formData, setFormData] = useState({
     company: '',
@@ -42,6 +42,7 @@ const WorkForm: React.FC = () => {
       }
 
       const result = await response.json();
+      Swal.fire('Success', 'Work added successfully', 'success');
       router.push('/');
     
       // Handle success (e.g., redirect or show a message)

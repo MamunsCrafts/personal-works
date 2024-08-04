@@ -70,7 +70,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } catch (error) {
       res.status(400).json({ message: error });
     }
-  } else {
+  } 
+  else if(req.method === 'DELETE'){
+    try {
+      // console.log("request started",new Date())
+      const {id} = req.query;
+     const res = await Work.findByIdAndDelete(id);
+    //  console.log("request after db query",new Date(),res)
+     if (!res) {
+      return res.status(404).json({ message: 'Work not found' });
+    }
+    // console.log("request ended",new Date())
+   
+    return  res.status(200).json(res);
+      
+    } catch (error) {
+      res.status(400).json({ message: error });
+      
+    }
+  }
+  
+  
+  else {
     res.status(405).json({ message: "Method not allowed" });
   }
 };
